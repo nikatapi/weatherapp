@@ -1,0 +1,21 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "chart.js": "^2.3.0",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.10",
+    "mongoose": "^4.6.4",
+    "openweather": "^1.0.4",
+    "request": "^2.75.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
