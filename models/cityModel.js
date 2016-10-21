@@ -1,5 +1,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var http = require("http");
+var fs = require("fs");
+var key = fs.readFileSync("weatherapi.key");
+
 
 // create a schema
 var citySchema = new Schema({

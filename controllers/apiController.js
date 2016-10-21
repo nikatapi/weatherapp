@@ -1,7 +1,11 @@
+var http = require("http");
 var City = require('../models/cityModel');
 var bodyParser = require('body-parser');
+var fs = require("fs");
+var key = fs.readFileSync("weatherapi.key");
+var api = require('../modules/apiCall');
 
-module.exports = function(app){
+module.exports = function(app, intervals){
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,14 +27,26 @@ module.exports = function(app){
     //add a city
     app.post('/api/city', function(req, res){
         console.log('Request received for adding a city');
+        var name = req.body.name;
+        var interval = req.body.interval;
         var newCity = City({
-            name: req.body.name,
-            interval: req.body.interval
+            name: name,
+            interval: interval
         });
         newCity.save(function(err){
             if (err) throw err;
+            //finally go back to list page, we'll get the data later so the page loads faster
             res.redirect('/');
         });
+        //we need to get the weather data
+        var url = api.getUrl(name, key);
+        api.getApiData(url, name);
+        intervals[name] = setInterval(function(){
+                    api.getApiData(url, name);
+                    }, interval * 60000 );
+        console.log("Setting interval for "+ name);
+
+        
     });
 
     //delete a city
@@ -43,6 +59,10 @@ module.exports = function(app){
             }
             console.log("Removed" + req.params.name + "from database");
             res.redirect('/');
+            clearInterval(intervals[req.params.name]);
+            console.log("------clearing interval for "+ req.params.name + "---------");
+            intervals[req.params.name] = undefined;
+
         });
     });
 }
