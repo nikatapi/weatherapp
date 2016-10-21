@@ -1,3 +1,4 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,14 +11,14 @@
     <% include header %>
   </header>
 
-    <form action="/api/city" method="POST">
+    <form id="form" action="/api/city" method="POST">
       <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" class ="form-control" placeholder="name" name="name">
+        <input id="name" type="text" class ="form-control" placeholder="name" name="name">
       </div>
       <div class="form-group">
         <label for="male">Interval</label>
-        <input type="number" class ="form-control" placeholder="interval" name="interval">
+        <input id="interval" type="number" class ="form-control" placeholder="interval" name="interval">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -25,4 +26,16 @@
 <footer>
   <% include footer %>
 </footer>
+<script>
+$('#form').submit(function() {
+    if($('#name').val() == ''){
+        alert('Please add a city name');
+        return false;
+    }
+    if($('#interval').val() == ''){
+      alert('Please add an interval for tracking');
+      return false;
+    }
+});
+</script>
     

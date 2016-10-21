@@ -29,15 +29,18 @@ module.exports = function(app, intervals){
         console.log('Request received for adding a city');
         var name = req.body.name;
         var interval = req.body.interval;
+        
         var newCity = City({
             name: name,
             interval: interval
         });
+        //save in db
         newCity.save(function(err){
             if (err) throw err;
             //finally go back to list page, we'll get the data later so the page loads faster
             res.redirect('/');
         });
+        
         //we need to get the weather data
         var url = api.getUrl(name, key);
         api.getApiData(url, name);
@@ -45,8 +48,6 @@ module.exports = function(app, intervals){
                     api.getApiData(url, name);
                     }, interval * 3600000 );
         console.log("Setting interval for "+ name);
-
-        
     });
 
     //delete a city
