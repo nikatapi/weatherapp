@@ -43,7 +43,7 @@ module.exports = function(app, intervals){
         api.getApiData(url, name);
         intervals[name] = setInterval(function(){
                     api.getApiData(url, name);
-                    }, interval * 60000 );
+                    }, interval * 3600000 );
         console.log("Setting interval for "+ name);
 
         
